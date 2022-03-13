@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
@@ -8,11 +8,17 @@ import NewsCard from '../../components/NewsCard';
 import Header from '../../components/Header';
 import Loader from '../../components/Loader';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import ModalComponent from '../../components/Modal';
 
 const {dispatch} = store;
 
 const HomePage = () => {
   const {news, loading} = useSelector(state => state.model);
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   useEffect(() => {
     dispatch.model.fetchNews();
@@ -25,11 +31,12 @@ const HomePage = () => {
   return (
     <>
       <Container>
-        <Header title="HEADLINES" rightTitle="Create" />
+        <Header title="HEADLINES" openModal={toggleModal} />
         <KeyboardAwareScrollView>
           <FlatList data={news} renderItem={_renderItem} />
         </KeyboardAwareScrollView>
       </Container>
+      <ModalComponent isVisible={isModalVisible} onPressCancel={toggleModal} />
       {loading && <Loader />}
     </>
   );
