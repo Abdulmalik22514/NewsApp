@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import store from '../../store/store';
@@ -32,9 +32,9 @@ const HomePage = () => {
     <>
       <Container>
         <Header title="HEADLINES" openModal={toggleModal} />
-        <KeyboardAwareScrollView>
+        <View>
           <FlatList data={news} renderItem={_renderItem} />
-        </KeyboardAwareScrollView>
+        </View>
       </Container>
       <ModalComponent isVisible={isModalVisible} onPressCancel={toggleModal} />
       {loading && <Loader />}
