@@ -4,7 +4,7 @@ import {COLORS} from '../constants';
 import {hp, wp} from '../constants/utils';
 import {useNavigation} from '@react-navigation/native';
 
-const NewsCard = ({title, id, body}) => {
+const NewsCard = ({title, id}) => {
   const navigation = useNavigation();
 
   return (
