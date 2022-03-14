@@ -4,39 +4,62 @@ import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import store from '../../store/store';
 import {Container} from '../../shared/Container';
-import NewsCard from '../../components/NewsCard';
-import Header from '../../components/Header';
-import Loader from '../../components/Loader';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import ModalComponent from '../../components/Modal';
+import NewsCard from '../../shared/NewsCard';
+import Header from '../../shared/Header';
+import Loader from '../../shared/Loader';
+import ModalComponent from '../../shared/Modal';
+import uuid from 'uuidv4';
+import {generateUId} from '../../constants/helpers';
 
 const {dispatch} = store;
 
 const HomePage = () => {
   const {news, loading} = useSelector(state => state.model);
   const [isModalVisible, setModalVisible] = useState(false);
-
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+  const [author, setAuthor] = useState('');
+  const [title, setTitle] = useState('');
 
   useEffect(() => {
     dispatch.model.fetchNews();
   }, []);
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const createNews = () => {
+    const data = {
+      author,
+      title,
+      id: uuid(),
+    };
+    setModalVisible(false);
+    dispatch.model.addNews(data);
+  };
+
+  console.log(uuid());
+
   const _renderItem = ({item}) => {
-    return <NewsCard title={item.title} id={item.id} />;
+    return <NewsCard title={item.title} id={item.id} author={item.author} />;
   };
 
   return (
     <>
       <Container>
-        <Header title="HEADLINES" openModal={toggleModal} />
+        <Header title="HEADLINES" onPress={toggleModal} buttonTitle="Create" />
         <View>
           <FlatList data={news} renderItem={_renderItem} />
         </View>
       </Container>
-      <ModalComponent isVisible={isModalVisible} onPressCancel={toggleModal} />
+      <ModalComponent
+        isVisible={isModalVisible}
+        title={title}
+        author={author}
+        onPressCancel={toggleModal}
+        onChangeAuthor={setAuthor}
+        onChangeTitle={setTitle}
+        onPressSubmit={createNews}
+      />
       {loading && <Loader />}
     </>
   );
