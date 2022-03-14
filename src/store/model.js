@@ -61,7 +61,7 @@ const model = {
         .then(response => {
           dispatch.model.FETCH_NEWS_SUCCESS(response.data);
         })
-        .catch(error => Alert.alert('Error', error))
+        .catch(() => Alert.alert('Error', 'Unable to fetch your request'))
         .finally(() => dispatch.model.NOT_LOADING());
     },
 
@@ -72,7 +72,7 @@ const model = {
         .then(response => {
           dispatch.model.FETCH_NEWS_COMMENTS(response.data);
         })
-        .catch(error => Alert.alert('Error', error))
+        .catch(() => Alert.alert('Error', 'Unable to fetch your request'))
         .finally(() => dispatch.model.NOT_LOADING());
     },
 
@@ -81,25 +81,22 @@ const model = {
       await axios
         .get(`${baseUrl}/${id}/images`)
         .then(response => {
-          console.log('images', response.data);
           // Pick out the image url
           const NewsImages = response.data?.map(item => item.image);
           dispatch.model.FETCH_NEWS_IMAGES(NewsImages);
         })
-        .catch(error => Alert.alert('Error', error))
+        .catch(() => Alert.alert('Error', 'Unable to fetch your request'))
         .finally(() => dispatch.model.NOT_LOADING());
     },
 
     async addNews(data) {
       dispatch.model.IS_LOADING();
       await axios
-        .put(`${baseUrl}`, data)
+        .post(`${baseUrl}`, data)
         .then(response => {
-          console.log('post', response.data);
-          // const data = {...response.data, id: uuidv4()}
-          dispatch.model.FETCH_NEWS_SUCCESS(response.data);
+          dispatch.model.fetchNews(response.data);
         })
-        .catch(error => Alert.alert('Error', error))
+        .catch(() => Alert.alert('Error', 'Unable to fetch your request'))
         .finally(() => dispatch.model.NOT_LOADING());
     },
   }),
