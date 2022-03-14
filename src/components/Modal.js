@@ -12,7 +12,7 @@ const ModalComponent = ({
   onPressSubmit,
   onChangeTitle,
   title,
-  authorValue,
+  author,
 }) => {
   return (
     <Modal
@@ -26,7 +26,7 @@ const ModalComponent = ({
           <Input
             placeholder="Author"
             onChangeText={onChangeAuthor}
-            value={authorValue}
+            value={author}
           />
 
           <Input
