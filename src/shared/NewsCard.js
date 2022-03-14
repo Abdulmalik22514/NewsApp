@@ -10,7 +10,7 @@ const NewsCard = ({title, id, author}) => {
   return (
     <TouchableOpacity
       style={styles.container}
-      onPress={() => navigation.navigate('NewsContent', {id})}
+      onPress={() => navigation.navigate('NewsContent', {id, title})}
       activeOpacity={0.8}>
       <Text style={styles.title}>{title}</Text>
       <Text>{author}</Text>
