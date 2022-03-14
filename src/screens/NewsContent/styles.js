@@ -30,7 +30,6 @@ export const NewsContentStyles = StyleSheet.create({
   commentContainer: {
     marginHorizontal: wp(18),
     paddingHorizontal: wp(10),
-    paddingVertical: hp(10),
     backgroundColor: COLORS.grey,
     marginBottom: hp(20),
     borderRadius: 5,
