@@ -4,12 +4,12 @@ import {COLORS} from '../constants';
 import {hp} from '../constants/utils';
 import Button from './Button';
 
-const Header = ({title, leftView, leftTitle, openModal}) => {
+const Header = ({title, leftView, leftTitle, onPress}) => {
   return (
     <View style={styles.header}>
       {leftView ? <Text>{leftTitle}</Text> : <View />}
       <Text style={styles.headline}>{title}</Text>
-      <Button title="Create" onPress={openModal} />
+      <Button title="Create" onPress={onPress} />
     </View>
   );
 };
