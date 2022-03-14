@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    marginBottom: hp(30),
+    marginBottom: hp(20),
     backgroundColor: COLORS.lightBackground,
     paddingVertical: hp(20),
   },
