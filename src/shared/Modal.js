@@ -13,6 +13,9 @@ const ModalComponent = ({
   onChangeTitle,
   title,
   author,
+  isComment,
+  comment,
+  onAddComment,
 }) => {
   return (
     <Modal
@@ -23,17 +26,27 @@ const ModalComponent = ({
       coverScreen>
       <View style={styles.container}>
         <View style={styles.boxContainer}>
-          <Input
-            placeholder="Author"
-            onChangeText={onChangeAuthor}
-            value={author}
-          />
+          {isComment ? (
+            <Input
+              placeholder="Comment"
+              onChangeText={onAddComment}
+              value={comment}
+            />
+          ) : (
+            <View>
+              <Input
+                placeholder="Author"
+                onChangeText={onChangeAuthor}
+                value={author}
+              />
 
-          <Input
-            placeholder="Title"
-            onChangeText={onChangeTitle}
-            value={title}
-          />
+              <Input
+                placeholder="Title"
+                onChangeText={onChangeTitle}
+                value={title}
+              />
+            </View>
+          )}
           <View style={styles.buttonContainer}>
             <Button
               title="Cancel"
