@@ -1,15 +1,25 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import {COLORS} from '../constants';
-import {hp} from '../constants/utils';
+import {hp, wp} from '../constants/utils';
 import Button from './Button';
 
-const Header = ({title, leftView, leftTitle, onPress}) => {
+const Header = ({title, leftTitle, onPress, buttonTitle}) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.header}>
-      {leftView ? <Text>{leftTitle}</Text> : <View />}
+      {leftTitle ? (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => navigation.navigate('News')}>
+          <Text style={styles.backText}>{leftTitle}</Text>
+        </TouchableOpacity>
+      ) : (
+        <View />
+      )}
       <Text style={styles.headline}>{title}</Text>
-      <Button title="Create" onPress={onPress} />
+      <Button title={buttonTitle} onPress={onPress} />
     </View>
   );
 };
@@ -18,14 +28,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    marginBottom: hp(20),
+    paddingHorizontal: wp(16),
     backgroundColor: COLORS.lightBackground,
-    paddingVertical: hp(20),
+    paddingVertical: hp(16),
   },
   headline: {
     fontFamily: 'Roboto-Bold',
-    fontSize: 25,
+    fontSize: 22,
     color: 'white',
   },
   createButton: {
@@ -38,6 +47,11 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {
     color: 'white',
+  },
+  backText: {
+    color: COLORS.white,
+    fontFamily: 'Roboto-Regular',
+    fontSize: 17,
   },
 });
 
