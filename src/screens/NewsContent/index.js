@@ -1,15 +1,17 @@
-import React, {useEffect} from 'react';
-import {ScrollView, View, Text, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ScrollView, View, Text, FlatList, TextInput} from 'react-native';
 import {SliderBox} from 'react-native-image-slider-box';
 import {useSelector} from 'react-redux';
 import {Container} from '../../shared/Container';
 import Header from '../../shared/Header';
+import ModalComponent from '../../shared/Modal';
 import store from '../../store/store';
 import {NewsContentStyles as styles} from './styles';
 
 const {dispatch} = store;
 
 const NewsContent = ({route}) => {
+  const [isModalVisible, setModalVisible] = useState(false);
   const {comments, images} = useSelector(state => state.model);
 
   useEffect(() => {
@@ -19,10 +21,14 @@ const NewsContent = ({route}) => {
 
   const {id, title} = route.params;
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   const _renderItem = ({item}) => {
     return (
       <View style={styles.commentContainer}>
-        <Text style={styles.comments}>{item.comment}</Text>
+        <TextInput style={styles.comments} value={item.comment} />
       </View>
     );
   };
@@ -34,16 +40,20 @@ const NewsContent = ({route}) => {
   return (
     <>
       <Container>
-        <Header leftTitle="Back" title="NEWS DETAILS" buttonTitle="Comment" />
+        <Header
+          leftTitle="Back"
+          title="NEWS DETAILS"
+          buttonTitle="Comment"
+          onPress={toggleModal}
+        />
         <Text style={styles.title}>{title}</Text>
         <ScrollView>
           <SliderBox
             images={images}
             sliderBoxHeight={300}
             dotColor="yellow"
-            inactiveDotColor="#90A4AE"
+            inactiveDotColor="white"
             autoplay
-            circleLoop
           />
           <Text style={styles.commentHeading}>Comments</Text>
           <View style={styles.separator} />
@@ -55,6 +65,13 @@ const NewsContent = ({route}) => {
           />
         </ScrollView>
       </Container>
+      <ModalComponent
+        isComment
+        isVisible={isModalVisible}
+        comment={comments}
+        onPressCancel={toggleModal}
+        onPressSubmit={toggleModal}
+      />
     </>
   );
 };
