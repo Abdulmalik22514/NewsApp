@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 7,
     height: hp(45),
-    width: wp(100),
+    width: wp(85),
   },
   buttonTitle: {
     color: COLORS.white,
