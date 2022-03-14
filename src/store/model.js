@@ -9,6 +9,7 @@ const model = {
     loading: false,
     comments: [],
     images: [],
+    // newNews: {},
   }, // initial state
 
   reducers: {
@@ -44,6 +45,12 @@ const model = {
         images: payload,
       };
     },
+    // ADD_NEW_NEWS(state, payload) {
+    //   return {
+    //     ...state,
+    //     newNews: payload,
+    //   };
+    // },
   },
 
   effects: dispatch => ({
@@ -78,6 +85,19 @@ const model = {
           // Pick out the image url
           const NewsImages = response.data?.map(item => item.image);
           dispatch.model.FETCH_NEWS_IMAGES(NewsImages);
+        })
+        .catch(error => Alert.alert('Error', error))
+        .finally(() => dispatch.model.NOT_LOADING());
+    },
+
+    async addNews(data) {
+      dispatch.model.IS_LOADING();
+      await axios
+        .put(`${baseUrl}`, data)
+        .then(response => {
+          console.log('post', response.data);
+          // const data = {...response.data, id: uuidv4()}
+          dispatch.model.FETCH_NEWS_SUCCESS(response.data);
         })
         .catch(error => Alert.alert('Error', error))
         .finally(() => dispatch.model.NOT_LOADING());
