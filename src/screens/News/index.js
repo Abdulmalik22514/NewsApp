@@ -9,7 +9,6 @@ import Header from '../../shared/Header';
 import Loader from '../../shared/Loader';
 import ModalComponent from '../../shared/Modal';
 import uuid from 'uuidv4';
-import {generateUId} from '../../constants/helpers';
 
 const {dispatch} = store;
 
@@ -34,10 +33,10 @@ const HomePage = () => {
       id: uuid(),
     };
     setModalVisible(false);
+    setAuthor('');
+    setTitle('');
     dispatch.model.addNews(data);
   };
-
-  console.log(uuid());
 
   const _renderItem = ({item}) => {
     return <NewsCard title={item.title} id={item.id} author={item.author} />;
